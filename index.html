@@ -116,7 +116,7 @@
                		P1_score += 1 
                		document.getElementById("P1_score").innerHTML = P1_score; 
                 } 
-                document.getElementById("Message").innerHTML = "Game Over. Play Again. Your move Player "+ Math.pow(2, (round % 2))
+                document.getElementById("Message").innerHTML = "Game Over. Play Again. Your move Player "+ ((round % 2)+1)
                 nextround()
                 theword = ""
                 document.getElementById("theword").innerHTML = ""
@@ -126,10 +126,10 @@
             function playmove(){
             	//alert("got here")
             	if(!isword(theword)){
-                    document.getElementById("Message").innerHTML = "Hmm... interesting move. Now Player "+ Math.pow(2, (round % 2)) +", enter a letter."
+                    document.getElementById("Message").innerHTML = "Hmm... interesting move. Now Player "+ ((round % 2)+1) +", enter a letter."
                     nextround()
                 } else {
-                   	gameover(Math.pow(2, round % 2) == 1)
+                   	gameover(round % 2 == 1)
                 //round = 0  
                 }
                 
@@ -162,7 +162,7 @@
                 	document.getElementById("challengetext").type = "Text"
                 	document.getElementById("challenge").value = "Challenge Accepted"
                 	//alert("gothere")
-                	document.getElementById("Message").innerHTML = "Now Player "+ Math.pow(2, (round % 2)) + " Enter your word."
+                	document.getElementById("Message").innerHTML = "Now Player "+ ((round % 2)+1) + " Enter your word."
                 	nextround(round)
             	} else {
             		document.getElementById("challenge").value = "Challenge"
