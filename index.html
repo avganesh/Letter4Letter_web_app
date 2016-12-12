@@ -24,13 +24,14 @@
         <h1>Letter 4 Letter Web App</h1>
         <p id="Instructions"> 
         Here's how you play the game: 
-        <ul>
-        <li> First a player enters a letter </li>
-        <li> Click Right or Left to submit </li>
-        <li> Then the next player enters a letter </li> 
-        <li> Click Right or Left to submit </li>
-        <li> and so on... </li>
-        </ol>
+        <br>
+         First a player enters a letter
+         Click Right or Left to submit 
+         Then the next player enters a letter 
+         Click Right or Left to submit
+         and so on...
+         Use Challenge when you think your opponent is making up a word that doesn't exist. 
+        <br>
         The player that enters a letter, which spells a word with 4 letters or more <strong> loses </strong> 
 
         </p>
@@ -46,7 +47,7 @@
         <br> 
         <p id="wordlist"> </p>
         <br>
-        <input id="challenge" type="button" value="Challenge"> <input id="challengetext" type="hidden">
+        <input id="challenge" type="hidden" value="Challenge"> <input id="challengetext" type="hidden">
         <br> Player 1 score: <span id="P1_score"></span>
         <br> Player 2 score: <span id="P2_score"></span>
         <br>
@@ -69,7 +70,6 @@
             //function getwords(){ 
             	$.get("UKACD17.TXT", function(data){
                 	 wordlist = data.split("\r\n");
-                	
             	})
             //}
             //document.getElementById("wordlist").innerHTML = Array.isArray(wordlist)
@@ -86,23 +86,23 @@
 
             function addleft(){
                 if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z'){
-                    alert("Please enter a single lowercase letter only.");
+                    issueAlert();
                 } else {
                     theword = theletter.value + theword;
-                    lastword.push(theword+"\r\n");
-                    document.getElementById("lastword").innerHTML = lastword;
-                    document.getElementById("theword").innerHTML = theword;
+                    //lastword.push(theword+"\r\n");
+                    //document.getElementById("lastword").innerHTML = lastword;
+                    //document.getElementById("theword").innerHTML = theword;
                     playmove()
                 };
             }
             function addright(){
                 if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z'){
-                    alert("Please enter a single lowercase letter only.");;
+                    issueAlert();
                 }   else {
                     theword = theword + theletter.value;
-                    lastword.push(theword+"\r\n");
-                    document.getElementById("lastword").innerHTML = lastword; 
-                    document.getElementById("theword").innerHTML = theword;
+                    //lastword.push(theword+"\r\n");
+                    //document.getElementById("lastword").innerHTML = lastword; 
+                    //document.getElementById("theword").innerHTML = theword;
                     playmove()
                 };
             }
@@ -127,6 +127,9 @@
 
             function playmove(){
             	//alert("got here")
+                lastword.push(theword+"\r\n");
+                document.getElementById("lastword").innerHTML = lastword; 
+                document.getElementById("theword").innerHTML = theword;
             	if(!isword(theword)){
                     document.getElementById("Message").innerHTML = "Hmm... interesting move. Now Player "+ ((round % 2)+1) +", enter a letter."
                     nextround()
@@ -134,9 +137,20 @@
                    	gameover(round % 2 == 1)
                 //round = 0  
                 }
-                
+                showChallenge();
             };
-
+            
+            function issueAlert(){
+                alert("Please enter a single lowercase letter only.");
+            };
+            
+            function showChallenge(){
+                if (theword.length >1) {
+                    document.getElementById("challenge").type = "button"
+                } else { 
+                    document.getElementById("challenge").type = "hidden"
+                }
+            }
 
             //on left button click
             document.getElementById("leftbutton").addEventListener('click', function(){
@@ -179,7 +193,7 @@
             	}
             });
 
-            //on challenge button click 
+            //on reset button click 
             document.getElementById("reset").addEventListener('click', function(){
             	location.reload()
             })
